@@ -125,7 +125,7 @@
         <div id="employeeProjectWrapper">
           <!-- Initial Employee-Project Row -->
           <div class="employee-project">
-            <select name="employee_name" required>
+            <select name="employee_name[]" required>
               <option value="">Select Employee</option>
               <option>Junior</option>
               <option>Yorman</option>
@@ -137,7 +137,7 @@
               <option>Chicote</option>
             </select>
 
-            <select name="project" required>
+            <select name="project[]" required>
               <option value="">Select Project</option>
               <option>Golan</option>
               <option>Illiat</option>
@@ -170,7 +170,7 @@
         <textarea name="automation_goal" rows="4" required></textarea>
 
         <label>Active:</label>
-        <select name="active" id="active">
+        <select name="active" id="active" required>
           <option value="">Select</option>
           <option>Yes</option>
           <option>No</option>
@@ -189,7 +189,7 @@
     div.classList.add("employee-project");
 
     div.innerHTML = `
-      <select name="employee_name" required>
+      <select name="employee_name[]" required>
         <option value="">Select Employee</option>
         <option>Junior</option>
         <option>Yorman</option>
@@ -201,7 +201,7 @@
         <option>Chicote</option>
       </select>
 
-      <select name="project" required>
+      <select name="project[]" required>
         <option value="">Select Project</option>
         <option>Golan</option>
         <option>Illiat</option>
