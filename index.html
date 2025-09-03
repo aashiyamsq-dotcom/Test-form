@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Work Log Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 30px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .employee-project {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    button {
+      padding: 5px 10px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    textarea {
+      width: 100%;
+      height: 100px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Work Log Form</h2>
+  <form id="workForm">
+    
+    <div id="employeeProjectWrapper">
+      <div class="employee-project">
+        <select name="employee[]">
+          <option value="">-- Select Employee --</option>
+          <option value="emp1">Employee 1</option>
+          <option value="emp2">Employee 2</option>
+          <option value="emp3">Employee 3</option>
+        </select>
+
+        <select name="project[]">
+          <option value="">-- Select Project --</option>
+          <option value="proj1">Project A</option>
+          <option value="proj2">Project B</option>
+          <option value="proj3">Project C</option>
+        </select>
+      </div>
+    </div>
+
+    <button type="button" onclick="addEmployeeProject()">+ Add More</button>
+
+    <div class="form-group">
+      <label>Work Date:</label><br>
+      <input type="date" name="work_date">
+    </div>
+
+    <div class="form-group">
+      <label>Lunch Time (hrs):</label><br>
+      <input type="number" name="lunch_time" min="0" step="0.5">
+    </div>
+
+    <div class="form-group">
+      <label>Notes:</label><br>
+      <textarea name="notes"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>
+        <input type="checkbox" name="active"> Active
+      </label>
+    </div>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    function addEmployeeProject() {
+      const wrapper = document.getElementById("employeeProjectWrapper");
+
+      const div = document.createElement("div");
+      div.classList.add("employee-project");
+
+      div.innerHTML = `
+        <select name="employee[]">
+          <option value="">-- Select Employee --</option>
+          <option value="emp1">Employee 1</option>
+          <option value="emp2">Employee 2</option>
+          <option value="emp3">Employee 3</option>
+        </select>
+
+        <select name="project[]">
+          <option value="">-- Select Project --</option>
+          <option value="proj1">Project A</option>
+          <option value="proj2">Project B</option>
+          <option value="proj3">Project C</option>
+        </select>
+      `;
+
+      wrapper.appendChild(div);
+    }
+
+    document.getElementById("workForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      alert("Form su
