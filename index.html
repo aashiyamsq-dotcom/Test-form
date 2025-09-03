@@ -44,9 +44,6 @@
       border: 1px solid #ccc;
       border-radius: 8px;
       padding: 25px 30px;
-      margin-left: auto;
-      margin-right: auto;
-      max-width: 100%;
       margin-bottom: 25px;
       box-sizing: border-box;
     }
@@ -72,66 +69,6 @@
       font-style: italic;
     }
 
-    .priority-buttons {
-      display: flex;
-      gap: 15px;
-      margin-top: 10px;
-    }
-
-    .spacer-row {
-      height: 20px;
-    }
-
-    .reference-number-below {
-      display: flex;
-      justify-content: flex-end;
-      margin-bottom: 25px;
-    }
-
-    .reference-number-below label {
-      font-weight: bold;
-      font-size: 0.9em;
-      margin-right: 5px;
-    }
-
-    .reference-number-below input {
-      width: 160px;
-      padding: 6px 10px;
-      font-size: 0.9em;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-
-    .priority-btn {
-      padding: 8px 14px;
-      border-radius: 20px;
-      border: 2px solid #ccc;
-      background-color: #f9f9f9;
-      color: #555;
-      font-weight: bold;
-      cursor: pointer;
-      user-select: none;
-      transition: all 0.2s ease-in-out;
-    }
-
-    #priority-high:checked + label {
-      background-color: #ffe6e6;
-      color: #b30000;
-      border-color: #b30000;
-    }
-
-    #priority-medium:checked + label {
-      background-color: #fff6cc;
-      color: #b38f00;
-      border-color: #b38f00;
-    }
-
-    #priority-low:checked + label {
-      background-color: #f2f2f2;
-      color: #333;
-      border-color: #999;
-    }
-
     textarea {
       resize: vertical;
       white-space: pre-line;
@@ -145,70 +82,92 @@
       border: none;
       border-radius: 6px;
       cursor: pointer;
-      display: block;
-      margin: 20px auto 0;
+      display: inline-block;
+      margin-top: 15px;
     }
 
     button:hover {
       background-color: #1a242f;
     }
 
-    .hidden {
-      display: none;
+    .employee-project {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 10px;
+    }
+
+    .employee-project select {
+      flex: 1;
+    }
+
+    .remove-btn {
+      background-color: #e74c3c;
+      border: none;
+      padding: 6px 12px;
+      font-size: 0.9em;
+      border-radius: 5px;
+      cursor: pointer;
+      color: #fff;
+    }
+
+    .remove-btn:hover {
+      background-color: #c0392b;
     }
   </style>
 </head>
 <body>
   <div class="container">
-
-
+    <h2>Staff Allocation + Labor Cost</h2>
     <form id="myForm">
-<h2>Staff Allocation + Labor Cost</h2>
+      
+      <fieldset>
+        <legend>Assignees</legend>
+        <div id="employeeProjectWrapper">
+          <!-- Initial Employee-Project Row -->
+          <div class="employee-project">
+            <select name="employee_name[]" required>
+              <option value="">Select Employee</option>
+              <option>Junior</option>
+              <option>Yorman</option>
+              <option>Julio</option>
+              <option>Eddy</option>
+              <option>Yordano</option>
+              <option>Joel</option>
+              <option>Yendry</option>
+              <option>Chicote</option>
+            </select>
 
-<form id="myForm">
-  <div class="spacer-row"></div>
+            <select name="project[]" required>
+              <option value="">Select Project</option>
+              <option>Golan</option>
+              <option>Illiat</option>
+              <option>Bucare</option>
+              <option>Jensen Guest House</option>
+              <option>Bolona Pool</option>
+              <option>Illiat Pool</option>
+              <option>Hibiscus</option>
+              <option>Jensen Paver Extension</option>
+              <option>Jensen Misc</option>
+            </select>
 
+            <button type="button" class="remove-btn" onclick="removeRow(this)">Remove</button>
+          </div>
+        </div>
 
-<fieldset>
-  <legend>Assignees</legend>
-  <label>Employee Name:<span style="color: red;">*</span></label>
-  <select name="employee_name" required>
-    <option value="">Select</option>
-    <option>Junior</option>
-    <option>Yorman</option>
-    <option>Julio</option>
-    <option>Eddy</option>
-    <option>Yordano</option>
-    <option>Joel</option>
-    <option>Yendry</option>
-    <option>Chicote</option>
-  </select>
-    <label>Project:<span style="color: red;">*</span></label>
-  <select name="project" required>
-    <option value="">Select</option>
-    <option>Golan</option>
-    <option>Illiat</option>
-    <option>Bucare</option>
-    <option>Jensen Guest House</option>
-    <option>Bolona Pool</option>
-    <option>Illiat Pool</option>
-    <option>Hibiscus</option>
-    <option>Jensen Paver Extension</option>
-    <option>Jensen Misc</option>
-  </select>
-</fieldset>
+        <button type="button" onclick="addEmployeeProject()">+ Add More</button>
+      </fieldset>
 
       <fieldset>
         <legend>Client Information</legend>
         
-        <label>Date:<span style="color: red;">*</label>
-        <input type="date" name="submitted_date" placeholder="Select date..." required />
+        <label>Date:<span style="color: red;">*</span></label>
+        <input type="date" name="submitted_date" required />
 
         <label>Lunch Time (hrs):</label>
-      <input type="number" name="lunch_time" min="0" step="0.5"/>
+        <input type="number" name="lunch_time" min="0" step="0.5"/>
 
-        <label>Notes:<span style="color: red;">*</label>
-        <textarea class="bulleted" name="automation_goal" rows="4" required placeholder=""></textarea>
+        <label>Notes:<span style="color: red;">*</span></label>
+        <textarea name="automation_goal" rows="4" required></textarea>
 
         <label>Active:</label>
         <select name="active" id="active" required>
@@ -216,15 +175,74 @@
           <option>Yes</option>
           <option>No</option>
         </select>
+      </fieldset>
 
       <button type="submit">Submit Form</button>
     </form>
   </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
+  function addEmployeeProject() {
+    const wrapper = document.getElementById("employeeProjectWrapper");
 
+    const div = document.createElement("div");
+    div.classList.add("employee-project");
 
+    div.innerHTML = `
+      <select name="employee_name[]" required>
+        <option value="">Select Employee</option>
+        <option>Junior</option>
+        <option>Yorman</option>
+        <option>Julio</option>
+        <option>Eddy</option>
+        <option>Yordano</option>
+        <option>Joel</option>
+        <option>Yendry</option>
+        <option>Chicote</option>
+      </select>
+
+      <select name="project[]" required>
+        <option value="">Select Project</option>
+        <option>Golan</option>
+        <option>Illiat</option>
+        <option>Bucare</option>
+        <option>Jensen Guest House</option>
+        <option>Bolona Pool</option>
+        <option>Illiat Pool</option>
+        <option>Hibiscus</option>
+        <option>Jensen Paver Extension</option>
+        <option>Jensen Misc</option>
+      </select>
+
+      <button type="button" class="remove-btn" onclick="removeRow(this)">Remove</button>
+    `;
+
+    wrapper.appendChild(div);
+  }
+
+  function removeRow(button) {
+    const row = button.parentNode;
+    row.remove();
+  }
+
+  document.getElementById("myForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const formData = new FormData(this);
+    const entries = {};
+    for (let [key, value] of formData.entries()) {
+      if (!entries[key]) {
+        entries[key] = value;
+      } else if (Array.isArray(entries[key])) {
+        entries[key].push(value);
+      } else {
+        entries[key] = [entries[key], value];
+      }
+    }
+
+    console.log("Form Data:", entries);
+    alert("Form submitted! Check console for details.");
+  });
 </script>
 
 </body>
