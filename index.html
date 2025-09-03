@@ -11,6 +11,7 @@
       margin: 0;
       padding: 20px;
     }
+
     .container {
       max-width: 900px;
       margin: auto;
@@ -19,22 +20,26 @@
       border-radius: 10px;
       box-shadow: 0 0 15px rgba(0,0,0,0.1);
     }
+
     h2 {
       text-align: center;
       color: #2c3e50;
       margin-bottom: 0;
     }
+
     legend {
       font-weight: bold;
       font-size: 1.1em;
       color: #2c3e50;
       padding: 0 10px;
     }
+
     label {
       display: block;
       margin: 15px 0 5px;
       font-weight: 500;
     }
+
     fieldset {
       border: 1px solid #ccc;
       border-radius: 8px;
@@ -42,6 +47,7 @@
       margin-bottom: 25px;
       box-sizing: border-box;
     }
+
     input[type="text"],
     input[type="date"],
     input[type="file"],
@@ -56,15 +62,18 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       box-sizing: border-box;
     }
+
     input::placeholder,
     textarea::placeholder {
       color: #999;
       font-style: italic;
     }
+
     textarea {
       resize: vertical;
       white-space: pre-line;
     }
+
     button {
       background-color: #2c3e50;
       color: white;
@@ -76,17 +85,21 @@
       display: inline-block;
       margin-top: 15px;
     }
+
     button:hover {
       background-color: #1a242f;
     }
+
     .employee-project {
       display: flex;
       gap: 15px;
       margin-bottom: 10px;
     }
+
     .employee-project select {
       flex: 1;
     }
+
     .remove-btn {
       background-color: #e74c3c;
       border: none;
@@ -96,6 +109,7 @@
       cursor: pointer;
       color: #fff;
     }
+
     .remove-btn:hover {
       background-color: #c0392b;
     }
@@ -156,7 +170,7 @@
         <textarea name="automation_goal" rows="4" required></textarea>
 
         <label>Active:</label>
-        <select name="active" id="active" required>
+        <select name="active" id="active">
           <option value="">Select</option>
           <option>Yes</option>
           <option>No</option>
@@ -175,7 +189,7 @@
     div.classList.add("employee-project");
 
     div.innerHTML = `
-      <select name="employee_name[]" required>
+      <select name="employee_name" required>
         <option value="">Select Employee</option>
         <option>Junior</option>
         <option>Yorman</option>
@@ -187,7 +201,7 @@
         <option>Chicote</option>
       </select>
 
-      <select name="project[]" required>
+      <select name="project" required>
         <option value="">Select Project</option>
         <option>Golan</option>
         <option>Illiat</option>
@@ -211,61 +225,45 @@
     row.remove();
   }
 
-  document.getElementById("myForm").addEventListener("submit", function(e) {
-    e.preventDefault();
+document.getElementById("myForm").addEventListener("submit", async function(e) {
+  e.preventDefault();
 
-    const formData = new FormData(this);
-    const entries = {};
-    for (let [key, value] of formData.entries()) {
-      if (!entries[key]) {
-        entries[key] = value;
-      } else if (Array.isArray(entries[key])) {
-        entries[key].push(value);
-      } else {
-        entries[key] = [entries[key], value];
-      }
+  const formData = new FormData(this);
+  const entries = {};
+  for (let [key, value] of formData.entries()) {
+    if (!entries[key]) {
+      entries[key] = value;
+    } else if (Array.isArray(entries[key])) {
+      entries[key].push(value);
+    } else {
+      entries[key] = [entries[key], value];
     }
+  }
 
-    // ✅ Build employees array properly
-    const employees = [];
-    const names = Array.isArray(entries["employee_name[]"]) ? entries["employee_name[]"] : [entries["employee_name[]"]];
-    const projects = Array.isArray(entries["project[]"]) ? entries["project[]"] : [entries["project[]"]];
+  console.log("Form Data:", entries);
 
-    for (let i = 0; i < names.length; i++) {
-      employees.push({
-        employee_name: names[i],
-        project: projects[i] || ""
-      });
-    }
-
-    // ✅ Final payload
-    const payload = {
-      submitted_date: entries.submitted_date,
-      lunch_time: entries.lunch_time,
-      automation_goal: entries.automation_goal,
-      active: entries.active,
-      employees: employees
-    };
-
-    // ✅ Send to webhook
-    fetch("YOUR_WEBHOOK_URL", {
+  try {
+    const response = await fetch("https://hook.eu1.make.com/j3uhix1b0qfm7j3b93wdkrlpvmu97qvn", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    })
-    .then(res => {
-      if (!res.ok) throw new Error("Failed to submit form");
-      return res.json().catch(() => ({}));
-    })
-    .then(data => {
-      alert("Form submitted successfully!");
-      console.log("Webhook response:", data);
-    })
-    .catch(err => {
-      alert("Error submitting form: " + err.message);
-      console.error(err);
+      body: JSON.stringify(entries)
     });
-  });
+
+    const responseText = await response.text(); // 👈 log actual response
+    console.log("Webhook Response:", response.status, responseText);
+
+    if (response.ok) {
+      alert("Form submitted successfully!");
+      this.reset();
+    } else {
+      alert("Failed to submit form. Status: " + response.status);
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    alert("Error submitting form: " + error.message);
+  }
+});
+
 </script>
 
 </body>
