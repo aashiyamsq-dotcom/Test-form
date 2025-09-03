@@ -1,107 +1,231 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Work Log Form</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Staff Allocation + Labor Cost</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      margin: 30px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
     }
-    .form-group {
-      margin-bottom: 15px;
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background-color: #fff;
+      padding: 30px 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
     }
-    .employee-project {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 10px;
+
+    h2 {
+      text-align: center;
+      color: #2c3e50;
+      margin-bottom: 0;
     }
-    button {
-      padding: 5px 10px;
-      margin-top: 10px;
-      cursor: pointer;
+
+    legend {
+      font-weight: bold;
+      font-size: 1.1em;
+      color: #2c3e50;
+      padding: 0 10px;
     }
-    textarea {
+
+    label {
+      display: block;
+      margin: 15px 0 5px;
+      font-weight: 500;
+    }
+
+    fieldset {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 25px 30px;
+      margin-left: auto;
+      margin-right: auto;
+      max-width: 100%;
+      margin-bottom: 25px;
+      box-sizing: border-box;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="file"],
+    textarea,
+    select {
       width: 100%;
-      height: 100px;
+      padding: 10px;
+      margin-top: 3px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1em;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      box-sizing: border-box;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #999;
+      font-style: italic;
+    }
+
+    .priority-buttons {
+      display: flex;
+      gap: 15px;
+      margin-top: 10px;
+    }
+
+    .spacer-row {
+      height: 20px;
+    }
+
+    .reference-number-below {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 25px;
+    }
+
+    .reference-number-below label {
+      font-weight: bold;
+      font-size: 0.9em;
+      margin-right: 5px;
+    }
+
+    .reference-number-below input {
+      width: 160px;
+      padding: 6px 10px;
+      font-size: 0.9em;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .priority-btn {
+      padding: 8px 14px;
+      border-radius: 20px;
+      border: 2px solid #ccc;
+      background-color: #f9f9f9;
+      color: #555;
+      font-weight: bold;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.2s ease-in-out;
+    }
+
+    #priority-high:checked + label {
+      background-color: #ffe6e6;
+      color: #b30000;
+      border-color: #b30000;
+    }
+
+    #priority-medium:checked + label {
+      background-color: #fff6cc;
+      color: #b38f00;
+      border-color: #b38f00;
+    }
+
+    #priority-low:checked + label {
+      background-color: #f2f2f2;
+      color: #333;
+      border-color: #999;
+    }
+
+    textarea {
+      resize: vertical;
+      white-space: pre-line;
+    }
+
+    button {
+      background-color: #2c3e50;
+      color: white;
+      padding: 12px 25px;
+      font-size: 1em;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      display: block;
+      margin: 20px auto 0;
+    }
+
+    button:hover {
+      background-color: #1a242f;
+    }
+
+    .hidden {
+      display: none;
     }
   </style>
 </head>
 <body>
+  <div class="container">
 
-  <h2>Work Log Form</h2>
-  <form id="workForm">
-    
-    <div id="employeeProjectWrapper">
-      <div class="employee-project">
-        <select name="employee[]">
-          <option value="">-- Select Employee --</option>
-          <option value="emp1">Employee 1</option>
-          <option value="emp2">Employee 2</option>
-          <option value="emp3">Employee 3</option>
+
+    <form id="myForm">
+<h2>Staff Allocation + Labor Cost</h2>
+
+<form id="myForm">
+  <div class="spacer-row"></div>
+
+
+<fieldset>
+  <legend>Assignees</legend>
+  <label>Employee Name:<span style="color: red;">*</span></label>
+  <select name="employee_name" required>
+    <option value="">Select</option>
+    <option>Junior</option>
+    <option>Yorman</option>
+    <option>Julio</option>
+    <option>Eddy</option>
+    <option>Yordano</option>
+    <option>Joel</option>
+    <option>Yendry</option>
+    <option>Chicote</option>
+  </select>
+    <label>Project:<span style="color: red;">*</span></label>
+  <select name="project" required>
+    <option value="">Select</option>
+    <option>Golan</option>
+    <option>Illiat</option>
+    <option>Bucare</option>
+    <option>Jensen Guest House</option>
+    <option>Bolona Pool</option>
+    <option>Illiat Pool</option>
+    <option>Hibiscus</option>
+    <option>Jensen Paver Extension</option>
+    <option>Jensen Misc</option>
+  </select>
+</fieldset>
+
+      <fieldset>
+        <legend>Client Information</legend>
+        
+        <label>Date:<span style="color: red;">*</label>
+        <input type="date" name="submitted_date" placeholder="Select date..." required />
+
+        <label>Lunch Time (hrs):</label>
+      <input type="number" name="lunch_time" min="0" step="0.5"/>
+
+        <label>Notes:<span style="color: red;">*</label>
+        <textarea class="bulleted" name="automation_goal" rows="4" required placeholder=""></textarea>
+
+        <label>Active:</label>
+        <select name="active" id="active" required>
+          <option value="">Select</option>
+          <option>Yes</option>
+          <option>No</option>
         </select>
 
-        <select name="project[]">
-          <option value="">-- Select Project --</option>
-          <option value="proj1">Project A</option>
-          <option value="proj2">Project B</option>
-          <option value="proj3">Project C</option>
-        </select>
-      </div>
-    </div>
+      <button type="submit">Submit Form</button>
+    </form>
+  </div>
 
-    <button type="button" onclick="addEmployeeProject()">+ Add More</button>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
 
-    <div class="form-group">
-      <label>Work Date:</label><br>
-      <input type="date" name="work_date">
-    </div>
 
-    <div class="form-group">
-      <label>Lunch Time (hrs):</label><br>
-      <input type="number" name="lunch_time" min="0" step="0.5">
-    </div>
+</script>
 
-    <div class="form-group">
-      <label>Notes:</label><br>
-      <textarea name="notes"></textarea>
-    </div>
-
-    <div class="form-group">
-      <label>
-        <input type="checkbox" name="active"> Active
-      </label>
-    </div>
-
-    <button type="submit">Submit</button>
-  </form>
-
-  <script>
-    function addEmployeeProject() {
-      const wrapper = document.getElementById("employeeProjectWrapper");
-
-      const div = document.createElement("div");
-      div.classList.add("employee-project");
-
-      div.innerHTML = `
-        <select name="employee[]">
-          <option value="">-- Select Employee --</option>
-          <option value="emp1">Employee 1</option>
-          <option value="emp2">Employee 2</option>
-          <option value="emp3">Employee 3</option>
-        </select>
-
-        <select name="project[]">
-          <option value="">-- Select Project --</option>
-          <option value="proj1">Project A</option>
-          <option value="proj2">Project B</option>
-          <option value="proj3">Project C</option>
-        </select>
-      `;
-
-      wrapper.appendChild(div);
-    }
-
-    document.getElementById("workForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      alert("Form su
+</body>
+</html>
