@@ -225,7 +225,7 @@
     row.remove();
   }
 
-  document.getElementById("myForm").addEventListener("submit", function(e) {
+  document.getElementById("myForm").addEventListener("submit", async function(e) {
     e.preventDefault();
 
     const formData = new FormData(this);
@@ -241,7 +241,24 @@
     }
 
     console.log("Form Data:", entries);
-    alert("Form submitted! Check console for details.");
+
+    try {
+      const response = await fetch("YOUR_WEBHOOK_URL_HERE", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(entries)
+      });
+
+      if (response.ok) {
+        alert("Form submitted successfully!");
+        this.reset();
+      } else {
+        alert("Failed to submit form.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Error submitting form.");
+    }
   });
 </script>
 
