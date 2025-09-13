@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Staff Allocation + Labor Cost</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -52,7 +53,6 @@
     input[type="text"],
     input[type="file"],
     input[type="number"],
-    input[type="date"],
     textarea,
     select {
       width: 100%;
@@ -175,7 +175,7 @@
 <fieldset>
 <legend>Client Information</legend>
 <label>Date (MM-DD-YYYY):<span style="color: red;">*</span></label>
-<input type="date" id="submitted_date" name="submitted_date" required />
+<input type="text" id="submitted_date" name="submitted_date" placeholder="MM-DD-YYYY" required />
 
 <label>Lunch Time (hrs):</label>
 <input type="number" name="lunch_time" min="0" step="0.5"/>
@@ -195,6 +195,7 @@
 </form>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
   // ===== Password Protection =====
   const PASSWORD = "12345"; // <-- set your password here
@@ -208,6 +209,11 @@
       document.getElementById("errorMsg").style.display = "block";
     }
   }
+
+  // ===== Initialize Flatpickr for MM-DD-YYYY =====
+  flatpickr("#submitted_date", {
+    dateFormat: "m-d-Y" // MM-DD-YYYY
+  });
 
   // ===== Add/Remove Employees =====
   function addEmployeeProject() {
@@ -260,16 +266,8 @@
       project: projects[i] || ""
     }));
 
-    // Reformat date to MM-DD-YYYY
-    let rawDate = formData.get("submitted_date"); // "YYYY-MM-DD"
-    let formattedDate = "";
-    if (rawDate) {
-      const [year, month, day] = rawDate.split("-");
-      formattedDate = `${month}-${day}-${year}`;
-    }
-
     const payload = {
-      submitted_date: formattedDate,
+      submitted_date: formData.get("submitted_date"), // already MM-DD-YYYY from Flatpickr
       lunch_time: formData.get("lunch_time"),
       notes: formData.get("notes"),
       active: formData.get("active"),
