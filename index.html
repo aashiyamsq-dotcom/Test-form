@@ -177,6 +177,9 @@
 <label>Date (MM-DD-YYYY):<span style="color: red;">*</span></label>
 <input type="text" id="submitted_date" name="submitted_date" placeholder="MM-DD-YYYY" required />
 
+<label>Start Time:<span style="color: red;">*</span></label>
+<input type="text" id="start_time" name="start_time" placeholder="HH:MM" required />
+
 <label>Lunch Time (hrs):</label>
 <input type="number" name="lunch_time" min="0" step="0.5"/>
 
@@ -210,9 +213,16 @@
     }
   }
 
-  // ===== Initialize Flatpickr for MM-DD-YYYY =====
+  // ===== Initialize Flatpickr =====
   flatpickr("#submitted_date", {
     dateFormat: "m-d-Y" // MM-DD-YYYY
+  });
+
+  flatpickr("#start_time", {
+    enableTime: true,
+    noCalendar: true,
+    dateFormat: "h:i K", // 12-hour format with AM/PM
+    time_24hr: false
   });
 
   // ===== Add/Remove Employees =====
@@ -267,7 +277,8 @@
     }));
 
     const payload = {
-      submitted_date: formData.get("submitted_date"), // already MM-DD-YYYY from Flatpickr
+      submitted_date: formData.get("submitted_date"),
+      start_time: formData.get("start_time"),
       lunch_time: formData.get("lunch_time"),
       notes: formData.get("notes"),
       active: formData.get("active"),
