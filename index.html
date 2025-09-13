@@ -52,6 +52,7 @@
     input[type="text"],
     input[type="file"],
     input[type="number"],
+    input[type="date"],
     textarea,
     select {
       width: 100%;
@@ -174,7 +175,7 @@
 <fieldset>
 <legend>Client Information</legend>
 <label>Date (MM-DD-YYYY):<span style="color: red;">*</span></label>
-<input type="text" name="submitted_date" placeholder="MM-DD-YYYY" pattern="^(0[1-9]|1[0-2])-([0-2][0-9]|3[01])-\d{4}$" required />
+<input type="date" id="submitted_date" name="submitted_date" required />
 
 <label>Lunch Time (hrs):</label>
 <input type="number" name="lunch_time" min="0" step="0.5"/>
@@ -259,8 +260,16 @@
       project: projects[i] || ""
     }));
 
+    // Reformat date to MM-DD-YYYY
+    let rawDate = formData.get("submitted_date"); // "YYYY-MM-DD"
+    let formattedDate = "";
+    if (rawDate) {
+      const [year, month, day] = rawDate.split("-");
+      formattedDate = `${month}-${day}-${year}`;
+    }
+
     const payload = {
-      submitted_date: formData.get("submitted_date"),
+      submitted_date: formattedDate,
       lunch_time: formData.get("lunch_time"),
       notes: formData.get("notes"),
       active: formData.get("active"),
